@@ -1,0 +1,17 @@
+{
+  "name": "闲鱼捡漏助手",
+  "short_name": "捡漏助手",
+  "description": "评估闲鱼二手商品是否价格低、品质好、卖家可信。",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f6f8f7",
+  "theme_color": "#0f766e",
+  "icons": [
+    {
+      "src": "./assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
