@@ -14,6 +14,7 @@ const riskList = document.querySelector("#riskList");
 const messageBox = document.querySelector("#messageBox");
 const copyMessageButton = document.querySelector("#copyMessageButton");
 const historyList = document.querySelector("#historyList");
+const mobileTip = document.querySelector("#mobileTip");
 
 const defaultChecks = [
   ["价格核对", "打开原链接，比对同型号近 3-5 个在售价，低于常见价 15% 以上再继续。"],
@@ -135,7 +136,7 @@ function analyze() {
     linkStatus.textContent = result.reason;
     itemId.textContent = "未识别";
     actionLevel.textContent = "先粘贴";
-    actionSummary.textContent = "复制闲鱼商品分享链接后再点开始识别。";
+    actionSummary.textContent = "点输入框，长按粘贴链接，粘贴后会自动识别。";
     messageBox.value = "粘贴商品链接后，会自动生成给卖家的核验话术。";
     renderRisks(["当前没有可分析的有效链接。"]);
     return;
@@ -161,6 +162,9 @@ function analyze() {
 }
 
 async function analyzeFromCurrentInputOrClipboard() {
+  analyzeButton.classList.add("is-working");
+  window.setTimeout(() => analyzeButton.classList.remove("is-working"), 220);
+
   if (!dealLink.value.trim()) {
     try {
       const text = await navigator.clipboard.readText();
@@ -168,9 +172,10 @@ async function analyzeFromCurrentInputOrClipboard() {
     } catch {
       linkScore.textContent = "--";
       linkScore.className = "score-bad";
-      linkStatus.textContent = "浏览器拦截了剪贴板。请点输入框，长按粘贴链接。";
+      linkStatus.textContent = "手机浏览器不能直接读取复制内容，请点输入框长按粘贴。";
       actionLevel.textContent = "等你粘贴";
       actionSummary.textContent = "粘贴后会自动识别，不需要再填写其他信息。";
+      mobileTip.textContent = "已准备好：请点上面的输入框，长按选择“粘贴”。";
       dealLink.focus();
       return;
     }
@@ -186,15 +191,19 @@ pasteButton.addEventListener("click", async () => {
     analyze();
   } catch {
     dealLink.focus();
-    linkStatus.textContent = "浏览器没有给剪贴板权限。请点输入框，长按粘贴。";
+    linkStatus.textContent = "手机浏览器没有给剪贴板权限。请点输入框，长按粘贴。";
     actionLevel.textContent = "等你粘贴";
     actionSummary.textContent = "粘贴后会自动识别。";
+    mobileTip.textContent = "请点输入框，长按粘贴；粘贴进去的一瞬间会自动识别。";
   }
 });
 
 analyzeButton.addEventListener("click", analyzeFromCurrentInputOrClipboard);
 dealLink.addEventListener("input", () => {
-  if (dealLink.value.trim()) analyze();
+  if (dealLink.value.trim()) {
+    mobileTip.textContent = "已收到链接，正在识别。";
+    analyze();
+  }
 });
 dealLink.addEventListener("paste", () => {
   window.setTimeout(analyze, 50);
@@ -223,8 +232,15 @@ copyMessageButton.addEventListener("click", async () => {
 });
 
 if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js").catch(() => {});
+  window.addEventListener("load", async () => {
+    try {
+      const registrations = await navigator.serviceWorker.getRegistrations();
+      await Promise.all(registrations.map((registration) => registration.unregister()));
+      if ("caches" in window) {
+        const keys = await caches.keys();
+        await Promise.all(keys.map((key) => caches.delete(key)));
+      }
+    } catch {}
   });
 }
 
