@@ -1,5 +1,5 @@
-const CACHE_NAME = "xianyu-deal-scout-v5";
-const ASSETS = ["./", "./index.html", "./styles.css?v=5", "./app.js?v=5", "./manifest.webmanifest?v=5", "./assets/icon.svg"];
+const CACHE_NAME = "xianyu-deal-scout-v6";
+const ASSETS = ["./", "./index.html", "./styles.css?v=5", "./app.js?v=6", "./manifest.webmanifest?v=5", "./assets/icon.svg"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS)));
