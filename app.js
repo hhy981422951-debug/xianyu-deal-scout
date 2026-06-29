@@ -168,9 +168,9 @@ async function analyzeFromCurrentInputOrClipboard() {
     } catch {
       linkScore.textContent = "--";
       linkScore.className = "score-bad";
-      linkStatus.textContent = "没有读到剪贴板。请长按输入框粘贴链接，或点“粘贴”。";
-      actionLevel.textContent = "需要粘贴";
-      actionSummary.textContent = "手机浏览器可能会限制自动读取剪贴板。";
+      linkStatus.textContent = "浏览器拦截了剪贴板。请点输入框，长按粘贴链接。";
+      actionLevel.textContent = "等你粘贴";
+      actionSummary.textContent = "粘贴后会自动识别，不需要再填写其他信息。";
       dealLink.focus();
       return;
     }
@@ -186,7 +186,9 @@ pasteButton.addEventListener("click", async () => {
     analyze();
   } catch {
     dealLink.focus();
-    linkStatus.textContent = "浏览器没有给剪贴板权限，可以手动粘贴。";
+    linkStatus.textContent = "浏览器没有给剪贴板权限。请点输入框，长按粘贴。";
+    actionLevel.textContent = "等你粘贴";
+    actionSummary.textContent = "粘贴后会自动识别。";
   }
 });
 
