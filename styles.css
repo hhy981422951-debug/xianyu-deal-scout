@@ -187,6 +187,14 @@ button {
   line-height: 1.65;
 }
 
+.mobile-tip {
+  margin: 10px 0 0;
+  color: #d9e3ff;
+  font-size: 14px;
+  line-height: 1.5;
+  text-shadow: 0 0 12px rgba(22, 231, 255, 0.35);
+}
+
 .link-box {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 76px;
@@ -245,6 +253,11 @@ textarea:focus {
   border-radius: 999px;
   background: linear-gradient(90deg, var(--cyan), var(--blue), var(--pink));
   box-shadow: 0 0 30px rgba(255, 54, 214, 0.35);
+}
+
+.cta.is-working {
+  filter: brightness(1.2);
+  transform: translateY(1px);
 }
 
 .robot {
