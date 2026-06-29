@@ -160,6 +160,25 @@ function analyze() {
   renderHistory();
 }
 
+async function analyzeFromCurrentInputOrClipboard() {
+  if (!dealLink.value.trim()) {
+    try {
+      const text = await navigator.clipboard.readText();
+      dealLink.value = normalizeUrl(text);
+    } catch {
+      linkScore.textContent = "--";
+      linkScore.className = "score-bad";
+      linkStatus.textContent = "没有读到剪贴板。请长按输入框粘贴链接，或点“粘贴”。";
+      actionLevel.textContent = "需要粘贴";
+      actionSummary.textContent = "手机浏览器可能会限制自动读取剪贴板。";
+      dealLink.focus();
+      return;
+    }
+  }
+
+  analyze();
+}
+
 pasteButton.addEventListener("click", async () => {
   try {
     const text = await navigator.clipboard.readText();
@@ -171,9 +190,15 @@ pasteButton.addEventListener("click", async () => {
   }
 });
 
-analyzeButton.addEventListener("click", analyze);
+analyzeButton.addEventListener("click", analyzeFromCurrentInputOrClipboard);
+dealLink.addEventListener("input", () => {
+  if (dealLink.value.trim()) analyze();
+});
+dealLink.addEventListener("paste", () => {
+  window.setTimeout(analyze, 50);
+});
 dealLink.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") analyze();
+  if (event.key === "Enter") analyzeFromCurrentInputOrClipboard();
 });
 
 clearButton.addEventListener("click", () => {
