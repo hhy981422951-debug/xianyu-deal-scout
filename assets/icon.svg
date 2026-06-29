@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="闲鱼捡漏助手图标">
+  <rect width="128" height="128" rx="24" fill="#0f766e"/>
+  <path d="M22 68c10-18 24-27 42-27 19 0 33 9 42 27-9 18-23 27-42 27-18 0-32-9-42-27Z" fill="#f8faf9"/>
+  <path d="M86 41c8 2 15 7 20 15 6-7 13-12 20-14-2 13-8 22-18 28 8 8 12 18 13 30-9-2-17-8-24-18-6 8-14 12-24 13 12-12 18-25 17-39 0-5-2-10-4-15Z" fill="#f2b84b"/>
+  <circle cx="54" cy="65" r="7" fill="#13201f"/>
+  <path d="M33 78c11 8 28 12 45 5" fill="none" stroke="#0f766e" stroke-width="7" stroke-linecap="round"/>
+  <path d="M62 22h20l-11 25h-20L62 22Z" fill="#f2b84b"/>
+</svg>
