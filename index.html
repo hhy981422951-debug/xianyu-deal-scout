@@ -3,112 +3,133 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#101820" />
-    <meta
-      name="description"
-      content="闲鱼捡漏助手：粘贴商品链接，快速生成风险判断、验货问题和砍价话术。"
-    />
-    <title>闲鱼捡漏助手</title>
-    <link rel="manifest" href="./manifest.webmanifest" />
+    <meta name="theme-color" content="#050817" />
+    <meta name="description" content="闲鱼捡漏雷达：复制闲鱼商品链接，快速识别商品 ID、风险和验货话术。" />
+    <title>闲鱼捡漏雷达</title>
+    <link rel="manifest" href="./manifest.webmanifest?v=5" />
     <link rel="icon" href="./assets/icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=5" />
   </head>
   <body>
-    <main class="page">
-      <section class="hero">
-        <nav class="topbar" aria-label="顶部导航">
-          <a class="brand" href="./">
-            <img src="./assets/icon.svg" alt="" width="38" height="38" />
-            <span>闲鱼捡漏助手</span>
-          </a>
-          <button class="icon-button" id="clearButton" type="button" title="清空记录" aria-label="清空记录">
-            <span aria-hidden="true">×</span>
-          </button>
-        </nav>
+    <main class="app">
+      <header class="topbar">
+        <div>
+          <h1>捡漏雷达</h1>
+          <p>闲鱼链接识别 · 风险扫描 · 验货话术</p>
+        </div>
+        <div class="profile">
+          <button class="bell" type="button" aria-label="提醒">3</button>
+          <div class="avatar">AI</div>
+        </div>
+      </header>
 
-        <div class="hero-grid">
+      <section class="hero-card">
+        <div class="tag">今日推荐</div>
+        <div class="hero-content">
           <div class="hero-copy">
-            <p class="eyebrow">Paste Link. Check Risk. Buy Smarter.</p>
-            <h1>只粘贴闲鱼商品链接，就能开始判断值不值得捡。</h1>
-            <p class="intro">
-              自动识别链接和商品 ID，生成验货问题、卖家风险提醒、砍价话术和交易建议。少填表，多避坑。
-            </p>
-          </div>
-
-          <section class="link-card" aria-label="链接分析">
-            <label for="dealLink">闲鱼商品链接</label>
-            <div class="paste-row">
+            <h2>AI 捡漏助手 · 你的闲鱼避坑伙伴</h2>
+            <p>复制商品链接，自动识别来源和商品 ID，生成风险提醒、验货问题和砍价话术。</p>
+            <div class="link-box">
               <input
                 id="dealLink"
                 type="url"
                 inputmode="url"
                 autocomplete="off"
-                placeholder="粘贴闲鱼商品分享链接，例如 https://..."
+                placeholder="粘贴闲鱼商品链接 / 分享口令"
               />
               <button id="pasteButton" type="button">粘贴</button>
             </div>
-            <button class="primary-button" id="analyzeButton" type="button">开始识别</button>
-            <p class="hint">
-              纯网页工具不会绕过闲鱼登录或抓取隐私数据；它会基于链接结构生成核验清单，并引导你回到闲鱼确认价格、成色和卖家。
-            </p>
-          </section>
+            <button id="analyzeButton" class="cta" type="button">开始识别</button>
+          </div>
+          <div class="robot" aria-hidden="true">
+            <div class="robot-head"><span></span><span></span></div>
+            <div class="robot-body">AI</div>
+            <i class="orbit one"></i>
+            <i class="orbit two"></i>
+          </div>
         </div>
       </section>
 
-      <section class="result-strip" id="resultPanel" aria-live="polite">
-        <article class="score-card">
-          <span>链接可信度</span>
+      <section class="quick-row" aria-label="识别结果">
+        <article>
+          <div class="icon bolt">⚡</div>
           <strong id="linkScore">--</strong>
-          <p id="linkStatus">等待粘贴商品链接</p>
+          <span>链接可信度</span>
+          <p id="linkStatus">还没有粘贴链接</p>
         </article>
-        <article class="score-card">
-          <span>商品 ID</span>
+        <article>
+          <div class="icon shield">◇</div>
           <strong id="itemId">未识别</strong>
+          <span>商品 ID</span>
           <p>用于回到原链接核对商品。</p>
         </article>
-        <article class="score-card">
+        <article>
+          <div class="icon scan">▦</div>
+          <strong id="actionLevel">先粘贴</strong>
           <span>建议动作</span>
-          <strong id="actionLevel">待分析</strong>
-          <p id="actionSummary">粘贴链接后生成下一步。</p>
+          <p id="actionSummary">复制链接后点开始识别。</p>
         </article>
       </section>
 
-      <section class="workbench">
-        <section class="panel">
-          <div class="panel-title">
-            <span class="dot"></span>
-            <h2>一键核验清单</h2>
-          </div>
-          <div class="check-grid" id="checkGrid"></div>
-        </section>
+      <section class="section-title">
+        <h2>全部工具</h2>
+        <button id="clearButton" type="button">清空</button>
+      </section>
 
-        <section class="panel accent-panel">
-          <div class="panel-title">
-            <span class="dot amber"></span>
-            <h2>卖家风险扫描</h2>
-          </div>
-          <ul class="risk-list" id="riskList"></ul>
-        </section>
+      <section class="tool-grid" id="checkGrid"></section>
 
-        <section class="panel message-panel">
-          <div class="panel-title">
-            <span class="dot green"></span>
-            <h2>可复制沟通话术</h2>
+      <section class="panel-grid">
+        <article class="panel">
+          <div class="panel-head">
+            <span></span>
+            <h2>风险扫描</h2>
+          </div>
+          <ul id="riskList" class="risk-list"></ul>
+        </article>
+
+        <article class="panel message-panel">
+          <div class="panel-head pink">
+            <span></span>
+            <h2>沟通话术</h2>
           </div>
           <textarea id="messageBox" readonly rows="8"></textarea>
-          <button class="secondary-button" id="copyMessageButton" type="button">复制话术</button>
-        </section>
-
-        <section class="panel history-panel">
-          <div class="panel-title">
-            <span class="dot blue"></span>
-            <h2>最近分析</h2>
-          </div>
-          <div id="historyList" class="history-list"></div>
-        </section>
+          <button id="copyMessageButton" class="copy-btn" type="button">复制话术</button>
+        </article>
       </section>
+
+      <section class="status-bar">
+        <article>
+          <div class="ring">78%</div>
+          <div>
+            <strong>识别状态</strong>
+            <p>链接、ID、风险三项联动</p>
+          </div>
+        </article>
+        <article>
+          <div class="safe">✓</div>
+          <div>
+            <strong>安全提醒</strong>
+            <p>不跳平台，不付定金</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="history-card">
+        <div class="panel-head blue">
+          <span></span>
+          <h2>最近分析</h2>
+        </div>
+        <div id="historyList" class="history-list"></div>
+      </section>
+
+      <nav class="bottom-nav" aria-label="底部导航">
+        <a class="active" href="./">首页</a>
+        <a href="#checkGrid">工具</a>
+        <a href="#messageBox">话术</a>
+        <a href="#historyList">我的</a>
+      </nav>
     </main>
 
-    <script src="./app.js"></script>
+    <script src="./app.js?v=5"></script>
   </body>
 </html>
