@@ -1,11 +1,11 @@
 {
   "name": "闲鱼捡漏助手",
   "short_name": "捡漏助手",
-  "description": "评估闲鱼二手商品是否价格低、品质好、卖家可信。",
+  "description": "粘贴闲鱼商品链接，快速生成风险判断、验货问题和砍价话术。",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#f6f8f7",
-  "theme_color": "#0f766e",
+  "background_color": "#fbfaf6",
+  "theme_color": "#101820",
   "icons": [
     {
       "src": "./assets/icon.svg",
