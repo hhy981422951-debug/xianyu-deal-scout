@@ -1,4 +1,4 @@
-const CACHE_NAME = "xianyu-deal-scout-v2";
+const CACHE_NAME = "xianyu-deal-scout-v3";
 const ASSETS = ["./", "./index.html", "./styles.css", "./app.js", "./manifest.webmanifest", "./assets/icon.svg"];
 
 self.addEventListener("install", (event) => {
